@@ -1,0 +1,96 @@
+<script setup>
+import { RouterLink } from 'vue-router';
+//vueuse
+import { useScroll } from "@vueuse/core";
+const { y } = useScroll(window);
+</script>
+
+<template>
+  <div class="app-header-sticky" :class="{ show: y > 78 }">
+    <div class="container">
+      <RouterLink class="logo" to="/" />
+      <ul class="app-header-nav">
+        <li class="home">
+          <router-link to="/">首页</router-link>
+        </li>
+        <li class="home">
+          <router-link to="/package">锂电池组装</router-link>
+        </li>
+        <li class="home">
+          <router-link to="/weld">锂电池焊接</router-link>
+        </li>
+        <li class="home">
+          <router-link to="/disassemble">锂电池拆解</router-link>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+
+<style scoped lang='scss'>
+.app-header-sticky {
+  width: 100%;
+  height: 115px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  background-color: #fff;
+  border-bottom: 1px solid #e4e4e4;
+  // 此处为关键样式!!!
+  // 状态一：往上平移自身高度 + 完全透明
+  transform: translateY(-100%);
+  opacity: 0;
+
+  // 状态二：移除平移 + 完全不透明
+  &.show {
+    transition: all 0.3s linear;
+    transform: none;
+    opacity: 1;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    width: 200px;
+    height: 115px; /* 调整高度 */
+    background: url("@/assets/images/logo.png") no-repeat center center;
+    background-size: 200px auto;
+  }
+}
+
+.app-header-nav {
+  max-width: 820px;
+  display: flex;
+  padding-left: 40px;
+  position: relative;
+  z-index: 998;
+
+  li {
+    margin-right: 40px;
+    width: 90px;
+    text-align: center;
+
+    a {
+      font-size: 16px;
+      line-height: 32px;
+      height: 32px;
+      display: inline-block;
+
+      &:hover {
+          color: #808080;
+          border-bottom: 1px solid #808080;
+        }
+      }
+
+      .active {
+        color: #808080;
+        border-bottom: 1px solid #808080;
+      }
+  }
+}
+</style>
